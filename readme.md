@@ -1,7 +1,7 @@
 # Quickly Intalling Cloud Native Storage for Pure Storage
 
 **Prereqs**
-Install K8s on VM's and make sure disk.EnableUUID setting is set in the vms. [CNS Documentation](https://docs.vmware.com/en/VMware-vSphere/6.7/Cloud-Native-Storage/GUID-3501C3F2-7D7C-45E9-B20A-F3F70D1E4679.html)
+Install K8s on VM's and make sure **disk.EnableUUID=1** setting is set in the vms. [CNS Documentation](https://docs.vmware.com/en/VMware-vSphere/6.7/Cloud-Native-Storage/GUID-3501C3F2-7D7C-45E9-B20A-F3F70D1E4679.html)
 
 Step 1.
 clone this repo
