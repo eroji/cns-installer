@@ -399,17 +399,17 @@ kubectl get pods --namespace=kube-system
 
 kubectl get CSINode
 
-echo "
-kind: StorageClass
-apiVersion: storage.k8s.io/v1
-metadata:
-  name: cns-vvols
-  annotations:
-    storageclass.kubernetes.io/is-default-class: \"false\"
-provisioner: csi.vsphere.vmware.com
-parameters:
-  # storagepolicyname: \"pure-vvols\"
-  DatastoreURL: \"Datastore1\"
-  fstype: ext4
-" > pure-cns-vvols.yaml
-kubectl create -f pure-cns-vvols.yaml
+# echo "
+# kind: StorageClass
+# apiVersion: storage.k8s.io/v1
+# metadata:
+#   name: cns-vvols
+#   annotations:
+#     storageclass.kubernetes.io/is-default-class: \"false\"
+# provisioner: csi.vsphere.vmware.com
+# parameters:
+#   # storagepolicyname: \"pure-vvols\"
+#   DatastoreURL: \"ds:///vmfs/volumes/vvol:373bb977d8ca3de8-a41c2e2c4d1f43e6/\"
+#   fstype: ext4
+# " > pure-cns-vvols.yaml
+# kubectl create -f pure-cns-vvols.yaml
