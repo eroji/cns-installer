@@ -188,12 +188,29 @@ spec:
         role: vsphere-csi
     spec:
       serviceAccountName: vsphere-csi-controller
-      nodeSelector:
-        node-role.kubernetes.io/master: ""
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: beta.kubernetes.io/os
+                operator: NotIn
+                values:
+                - windows
+              - key: node-role.kubernetes.io/controlplane
+                operator: In
+                values:
+                - "true"
       tolerations:
         - operator: "Exists"
           key: node-role.kubernetes.io/master
-          effect: NoSchedule
+          effect: "NoSchedule"
+        - operator: "Exists"
+          key: node-role.kubernetes.io/controlplane
+          effect: "NoSchedule"
+        - operator: "Exists"
+          key : node-role.kubernetes.io/etcd
+          effect: "NoExecute"
       hostNetwork: true
       containers:
         - name: csi-attacher
@@ -209,7 +226,7 @@ spec:
             - mountPath: /csi
               name: socket-dir
         - name: vsphere-csi-controller
-          image: vmware/vsphere-block-csi-driver:v1.0.0
+          image: gcr.io/cloud-provider-vsphere/csi/release/driver:v1.0.2
           lifecycle:
             preStop:
               exec:
@@ -241,7 +258,7 @@ spec:
             - mountPath: /var/lib/csi/sockets/pluginproxy/
               name: socket-dir
         - name: vsphere-syncer
-          image: vmware/volume-metadata-syncer:v1.0.0
+          image: gcr.io/cloud-provider-vsphere/csi/release/syncer:v1.0.2
           args:
             - "--v=2"
           imagePullPolicy: "Always"
@@ -255,7 +272,7 @@ spec:
               name: vsphere-config-volume
               readOnly: true
         - name: csi-provisioner
-          image: quay.io/k8scsi/csi-provisioner:v1.2.1
+          image: quay.io/k8scsi/csi-provisioner:v1.2.2
           args:
             - "--v=4"
             - "--timeout=60s"
