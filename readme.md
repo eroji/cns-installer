@@ -1,4 +1,4 @@
-# Quickly Intalling Cloud Native Storage for Pure Storage
+# Quickly Intalling Cloud Native Storage and Rancher Custom Clusters
 
 **Prereqs**
 Install K8s on VM's and make sure **disk.EnableUUID=1** setting is set in the vms. [CNS Documentation](https://docs.vmware.com/en/VMware-vSphere/6.7/Cloud-Native-Storage/GUID-3501C3F2-7D7C-45E9-B20A-F3F70D1E4679.html)
@@ -20,20 +20,9 @@ VC_NETWORK="<vc vm network name>"
 ```
 
 Step 3. 
-Create a VMFS Datastore (Sorry vVols is not yet supported by VMWare)
+Create a vSAN Datastore
 
-Step 4.
-VMware requires all the master to be tainted this way. 
-```
-MASTERS=$(kubectl get node --selector='node-role.kubernetes.io/master' -o name)
-for n in $MASTERS
-do
-    kubectl taint nodes $n node-role.kubernetes.io/master=:NoSchedule
-done
-kubectl describe nodes | egrep "Taints:|Name:"
-```
-
-Step 5. 
+Step 4. 
 ```
 # ./install.sh
 ```
