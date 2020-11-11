@@ -77,7 +77,7 @@ Then run the cleanup script.
 You can run ```kubectl get all --all-namespaces``` to verify
 
 ### Note
-If the CSI driver for vSphere does not start, the Cloud Controller may not have untainted the nodes when it initilized. I am have seen it work automatically and also had to run this:
+If the CSI driver for vSphere does not start, the Cloud Controller may not have untainted the nodes when it initilized. I have seen it work automatically and also had to run this:
 ```
 NODES=$(kubectl get nodes -o name)
 for n in $NODES
